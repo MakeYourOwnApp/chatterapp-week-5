@@ -205,7 +205,7 @@ h2 {
 
 #input-area {
     box-sizing: border-box;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -221,6 +221,7 @@ h2 {
     color: white;
     background-color: #00838f;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 #emoji-area {
@@ -230,7 +231,8 @@ h2 {
     position: fixed;
     left: 400px;
     bottom: 66px;
-    background-color: #eeeeee
+    background-color: #eeeeee;
+    cursor: pointer;
 }
 
 .toggle-area {
@@ -280,5 +282,6 @@ h2 {
 }
 
 #send-button {
-    color: #00838f54;
+    color: #00838f;
+    cursor: pointer;
 }

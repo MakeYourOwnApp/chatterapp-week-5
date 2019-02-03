@@ -3,67 +3,27 @@ const mockChannels = [{
         name: "MeetUp",
         favorite: true,
         messages: [],
-        latestMessage() {
-            if (!!this.messages.length) {
-                const latest = new Date(Math.max(...this.messages.map(x => x.createdOn)));
-                return latest.toLocaleTimeString("de-DE", {
-                    hour: "numeric",
-                    minute: "numeric"
-                })
-            } else {
-                return "No Messages"
-            }
-        }
+        latestMessage: "17:24"
     },
     {
         id: "6xwd0whqpv",
         name: "Oktoberfest",
         favorite: true,
         messages: [],
-        latestMessage() {
-            if (!!this.messages.length) {
-                const latest = new Date(Math.max(...this.messages.map(x => x.createdOn)));
-                return latest.toLocaleTimeString("de-DE", {
-                    hour: "numeric",
-                    minute: "numeric"
-                })
-            } else {
-                return "No Messages"
-            }
-        }
+        latestMessage: "17:24"
     },
     {
         id: "pc2z0hhkyf",
         name: "Weather",
         favorite: false,
         messages: [],
-        latestMessage() {
-            if (!!this.messages.length) {
-                const latest = new Date(Math.max(...this.messages.map(x => x.createdOn)));
-                return latest.toLocaleTimeString("de-DE", {
-                    hour: "numeric",
-                    minute: "numeric"
-                })
-            } else {
-                return "No Messages"
-            }
-        }
+        latestMessage: "17:24"
     },
     {
         id: "achndt7tst",
         name: "SevenContinents",
         favorite: false,
         messages: [],
-        latestMessage() {
-            if (!!this.messages.length) {
-                const latest = new Date(Math.max(...this.messages.map(x => x.createdOn)));
-                return latest.toLocaleTimeString("de-DE", {
-                    hour: "numeric",
-                    minute: "numeric"
-                })
-            } else {
-                return "No Messages"
-            }
-        }
+        latestMessage: "17:24"
     }
 ];
