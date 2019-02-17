@@ -5,7 +5,7 @@ let channels = [];
 let messages = [];
 
 /** create global variable for the currently selected channel */
-let currentChannel;
+let selectedChannel;
 
 // Functions to execute when DOM has loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -47,15 +47,15 @@ function displayChannels() {
     favoriteList.innerHTML = "";
     regularList.innerHTML = "";
     channels.forEach(channel => {
-        const channelString = ` <li id="` + channel.id + `" onclick="switchChannel(this.id)">
-                                    <i class="material-icons">group</i>
-                                    <span class="channel-name">` + channel.name + `</span>
-                                    <span class="timestamp">` + channel.latestMessage + `</span>
-                                </li>`
+        const currentChannelHtmlString = `  <li id="` + channel.id + `" onclick="switchChannel(this.id)">
+                                                <i class="material-icons">group</i>
+                                                <span class="channel-name">` + channel.name + `</span>
+                                                <span class="timestamp">` + channel.latestMessage + `</span>
+                                            </li>`
         if (channel.favorite) {
-            favoriteList.innerHTML += channelString
+            favoriteList.innerHTML += currentChannelHtmlString;
         } else {
-            regularList.innerHTML += channelString
+            regularList.innerHTML += currentChannelHtmlString;
         }
     })
 }
@@ -66,13 +66,13 @@ function displayChannels() {
  */
 function switchChannel(selectedChannelID) {
     console.log("selected channel with id: " + selectedChannelID);
-    if (!!currentChannel) {
-        document.getElementById(currentChannel.id).classList.remove("selected");
+    if (!!selectedChannel) {
+        document.getElementById(selectedChannel.id).classList.remove("selected");
     }
     document.getElementById(selectedChannelID).classList.add("selected")
     channels.forEach(channel => {
         if (channel.id === selectedChannelID) {
-            currentChannel = channel;
+            selectedChannel = channel;
         }
     })
     // hide user prompt and show input area the first time a user selects a channel
@@ -87,8 +87,8 @@ function switchChannel(selectedChannelID) {
 
 // changes header name and favorite button
 function showHeader() {
-    document.getElementById("message-area-header").getElementsByTagName('h1')[0].innerHTML = currentChannel.name;
-    document.getElementById('favorite-button').innerHTML = (currentChannel.favorite) ? "favorite" : "favorite_border";
+    document.getElementById("message-area-header").getElementsByTagName('h1')[0].innerHTML = selectedChannel.name;
+    document.getElementById('favorite-button').innerHTML = (selectedChannel.favorite) ? "favorite" : "favorite_border";
 }
 
 //---------------- Messages-----------------------------------
@@ -102,7 +102,7 @@ function showHeader() {
  */
 function Message(user, own, text, channelID) {
     this.createdBy = user;
-    this.createdOn = new Date (Date.now());
+    this.createdOn = new Date(Date.now());
     this.own = own;
     this.text = text;
     this.channel = channelID;
@@ -111,16 +111,16 @@ function Message(user, own, text, channelID) {
 //EventListener to send messages
 document.getElementById('send-button').addEventListener('click', sendMessage);
 
- // Check if input is provided, send message, and clear input. Return if not.
+// Check if input is provided, send message, and clear input. Return if not.
 function sendMessage() {
     const text = document.getElementById('message-input').value;
     if (!!text) {
         const myUserName = "Basti";
         const own = true;
-        const channelID = currentChannel.id;
-        const message = new Message (myUserName, own, text, channelID)
+        const channelID = selectedChannel.id;
+        const message = new Message(myUserName, own, text, channelID)
         console.log("New message: ", message);
-        currentChannel.messages.push(message);
+        selectedChannel.messages.push(message);
         document.getElementById('message-input').value = '';
         showMessages();
         displayChannels();
@@ -133,35 +133,35 @@ function sendMessage() {
 function showMessages() {
     const chatArea = document.getElementById('chat-area');
     chatArea.innerHTML = ""
-    currentChannel.messages.forEach(message => {
+    selectedChannel.messages.forEach(message => {
         const messageTime = message.createdOn.toLocaleTimeString("de-DE", {
             hour: "numeric",
             minute: "numeric"
         });
-        let messageString;
+        let currentMessageHtmlString;
         if (message.own) {
-            messageString = `<div class="message outgoing-message">
-                                    <div class="message-wrapper">
-                                        <div class="message-content">
-                                            <p>` + message.text + `</p>
-                                        </div>
-                                        <i class="material-icons">account_circle</i>
-                                    </div>
-                                    <span class="timestamp">` + messageTime + `</span>
-                                </div>`;
+            currentMessageHtmlString = `<div class="message outgoing-message">
+                                            <div class="message-wrapper">
+                                                <div class="message-content">
+                                                    <p>` + message.text + `</p>
+                                                </div>
+                                                <i class="material-icons">account_circle</i>
+                                            </div>
+                                            <span class="timestamp">` + messageTime + `</span>
+                                        </div>`;
         } else {
-            messageString = `<div class="message incoming-message">
-                                    <div class="message-wrapper">
-                                        <i class="material-icons">account_circle</i>
-                                        <div class="message-content">
-                                            <h3>` + message.createdBy + `</h3>
-                                            <p>` + message.text + `</p>
-                                        </div>
-                                    </div>
-                                    <span class="timestamp">` + messageTime + `</span>
-                                </div>`;
+            currentMessageHtmlString = `<div class="message incoming-message">
+                                            <div class="message-wrapper">
+                                                <i class="material-icons">account_circle</i>
+                                                <div class="message-content">
+                                                    <h3>` + message.createdBy + `</h3>
+                                                    <p>` + message.text + `</p>
+                                                </div>
+                                            </div>
+                                            <span class="timestamp">` + messageTime + `</span>
+                                        </div>`;
         }
-        chatArea.innerHTML += messageString;
+        chatArea.innerHTML += currentMessageHtmlString;
     })
 }
 
