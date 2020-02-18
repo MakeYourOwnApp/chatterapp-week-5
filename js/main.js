@@ -8,14 +8,17 @@ let messages = [];
 let selectedChannel;
 
 // Functions to execute when DOM has loaded
-document.addEventListener("DOMContentLoaded", () => {
+function init(){
     console.log("App is initialized")
     getChannels();
     getMessages();
     loadMessagesIntoChannel();
     displayChannels();
     loadEmojis();
-});
+    document.getElementById('send-button').addEventListener('click', sendMessage);
+    document.getElementById('emoticon-button').addEventListener('click', toggleEmojiArea);
+    document.getElementById('close-emoticon-button').addEventListener('click', toggleEmojiArea);
+}
 
 //---------------- Channels-----------------------------------
 
